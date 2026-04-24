@@ -2,21 +2,46 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ARTIST GALLERY</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; background: #111; overflow: hidden; }
-        .swiper { width: 100%; height: 100%; }
-        .swiper-slide { display: flex; justify-content: center; align-items: center; }
+        /* 배경을 어둡게 설정하여 작품이 돋보이게 함 */
+        body, html { 
+            margin: 0; 
+            padding: 0; 
+            height: 100%; 
+            background: #ffffff; /* 흰색 배경 선호하시면 #ffffff로 유지 */
+            overflow: hidden; 
+        }
+        .swiper { 
+            width: 100%; 
+            height: 100%; 
+        }
+        .swiper-slide { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+        }
         .poster-img { 
             max-width: 100%; 
             max-height: 100%; 
-            object-fit: contain; /* 이미지가 잘리지 않고 화면에 꽉 차게 설정 */
+            object-fit: contain; /* 이미지 비율 유지하며 꽉 차게 */
         }
-        /* 페이지 표시 (점) 색상 변경 */
-        .swiper-pagination-bullet { background: #fff; opacity: 0.5; }
-        .swiper-pagination-bullet-active { background: #fff; opacity: 1; }
+        
+        /* 스와이프 안내 힌트 (선택사항: 첫 화면에서 살짝 보였다 사라짐) */
+        .hint {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ccc;
+            font-size: 12px;
+            z-index: 10;
+            pointer-events: none;
+            font-family: sans-serif;
+            letter-spacing: 1px;
+        }
     </style>
 </head>
 <body>
@@ -24,25 +49,28 @@
 <div class="swiper">
     <div class="swiper-wrapper" id="slide-wrapper">
         </div>
-    <div class="swiper-pagination"></div>
-</div>
+    </div>
+
+<div class="hint">옆으로 넘겨서 보세요</div>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
     const wrapper = document.getElementById('slide-wrapper');
-    // 1부터 24까지 반복하며 슬라이드 생성
+    
+    // 1부터 24까지 이미지 슬라이드 생성
     for (let i = 1; i <= 24; i++) {
-        wrapper.innerHTML += `
-            <div class="swiper-slide">
-                <img src="./${i}.jpg" class="poster-img" alt="작가소개 ${i}">
-            </div>`;
+        const slide = document.createElement('div');
+        slide.className = 'swiper-slide';
+        slide.innerHTML = `<img src="./${i}.jpg" class="poster-img" alt="작가소개 ${i}">`;
+        wrapper.appendChild(slide);
     }
 
+    // 슬라이더 설정
     const swiper = new Swiper('.swiper', {
-        loop: false, // 마지막 작가에서 멈춤 (원하면 true로 변경)
-        pagination: { el: '.swiper-pagination' },
-        resistance: true,
-        resistanceRatio: 0,
+        loop: false,      // 마지막 이미지에서 멈춤
+        speed: 400,       // 넘어가는 속도
+        grabCursor: true, // 마우스 커서 모양 변경
+        // 하단 동그라미 설정(pagination)을 삭제했습니다.
     });
 </script>
 </body>
