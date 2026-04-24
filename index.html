@@ -3,112 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>24인 아티스트 통합 온라인 도록</title>
+    <title>Artist Gallery Exhibition</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
-        /* 기본 배경 및 텍스트 설정 */
+        :root {
+            --bg-color: #1a1a1a;
+            --ui-bg: rgba(0, 0, 0, 0.6);
+            --text-color: #ffffff;
+        }
+
         body, html { 
             margin: 0; 
             padding: 0; 
             height: 100%; 
-            background: #ffffff; 
+            background: var(--bg-color); 
             overflow: hidden; 
-            font-family: 'Pretendard', sans-serif;
+            font-family: 'Pretendard', -apple-system, sans-serif;
         }
 
-        /* 메인 슬라이더 컨테이너 */
+        /* 위아래 UI가 심심하지 않도록 그라데이션 및 블러 효과 적용 */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 70px;
+            background: linear-gradient(to bottom, var(--ui-bg), transparent);
+            backdrop-filter: blur(5px);
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header h1 {
+            color: var(--text-color);
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            font-weight: 300;
+            margin: 0;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 80px;
+            background: linear-gradient(to top, var(--ui-bg), transparent);
+            backdrop-filter: blur(5px);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* 슬라이더 영역 */
         .swiper { 
             width: 100%; 
             height: 100%; 
         }
 
-        /* 개별 슬라이드 (이미지) */
         .swiper-slide { 
             display: flex; 
             justify-content: center; 
             align-items: center; 
+            position: relative;
         }
 
-        /* 이미지 비율 유지 및 화면에 꽉 차게 */
+        /* 이미지가 화면에 꽉 차면서도 비율을 유지하게 설정 */
         .poster-img { 
-            max-width: 100%; 
-            max-height: 100%; 
-            object-fit: contain; 
+            max-width: 90%; 
+            max-height: 75vh; 
+            object-fit: contain;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border-radius: 4px;
         }
 
-        /* [NEW] 위아래 UI를 더 세련되게 (심심하지 않게) */
-        /* 상단 헤더 바 */
-        .header-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 60px;
-            background: rgba(0, 0, 0, 0.4); /* 연한 검은색 투명 */
-            backdrop-filter: blur(5px); /* 배경 흐림 효과 */
-            border-bottom: 2px solid rgba(255, 255, 255, 0.1); /* 하단 연한 테두리 */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-        }
-
-        .header-bar h1 {
-            color: white;
-            font-size: 1.2rem;
-            margin: 0;
-            letter-spacing: 1px;
-            font-weight: bold;
-        }
-
-        /* 하단 푸터 바 */
-        .footer-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 80px;
-            background: rgba(0, 0, 0, 0.4); /* 연한 검은색 투명 */
-            backdrop-filter: blur(5px); /* 배경 흐림 효과 */
-            border-top: 2px solid rgba(255, 255, 255, 0.1); /* 상단 연한 테두리 */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-        }
-
-        /* [NEW] 오른쪽으로 넘기는 아이콘 (힌트) */
-        .swipe-icon {
-            color: #ddd;
-            font-size: 14px;
-            letter-spacing: 1px;
-            opacity: 0.8;
-            pointer-events: none;
+        /* 오른쪽 넘기기 아이콘 애니메이션 */
+        .swipe-hint {
             display: flex;
             align-items: center;
-            animation: pulse-horizontal 2s infinite; /* 애니메이션 효과 */
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
+            animation: moveIcon 1.5s infinite;
         }
 
-        /* [NEW] 아이콘 애니메이션 (움직임) */
-        @keyframes pulse-horizontal {
-            0% { transform: translateX(-5px); opacity: 0.8; }
-            50% { transform: translateX(5px); opacity: 1; }
-            100% { transform: translateX(-5px); opacity: 0.8; }
+        @keyframes moveIcon {
+            0% { transform: translateX(0); opacity: 0.4; }
+            50% { transform: translateX(10px); opacity: 1; }
+            100% { transform: translateX(0); opacity: 0.4; }
         }
 
-        /* [NEW] 실제 넘기는 아이콘 모양 */
-        .arrow-right {
+        .arrow-svg {
             width: 24px;
             height: 24px;
-            fill: #fff;
-            margin-left: 8px;
+            fill: currentColor;
+            margin-left: 5px;
+        }
+
+        /* 배경이 심심하지 않도록 각 슬라이드 뒤에 이미지를 흐리게 배치 */
+        .bg-blur {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover;
+            background-position: center;
+            filter: blur(30px) brightness(0.4);
+            z-index: -1;
+            transform: scale(1.1);
         }
     </style>
 </head>
 <body>
 
-<div class="header-bar">
-    <h1>ARTIST GALLERY</h1>
+<div class="header">
+    <h1>ONLINE ART GALLERY</h1>
 </div>
 
 <div class="swiper">
@@ -116,10 +126,11 @@
         </div>
 </div>
 
-<div class="footer-bar">
-    <div class="swipe-icon">
-        <svg class="arrow-right" viewBox="0 0 24 24">
-            <path d="M8.12 9.29L12.83 14 8.12 18.71c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l5.41-5.41a1 1 0 000-1.41L9.53 7.88a.996.996 0 00-1.41 0c-.38.39-.38 1.03 0 1.41z"/>
+<div class="footer">
+    <div class="swipe-hint">
+        <span>NEXT</span>
+        <svg class="arrow-svg" viewBox="0 0 24 24">
+            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
         </svg>
     </div>
 </div>
@@ -128,26 +139,22 @@
 <script>
     const wrapper = document.getElementById('slide-wrapper');
     
-    // 이미지 파일명 목록 (실제 올리신 파일명으로 수정하세요!)
-    const images = [
-        "구아.jpg", "정수진.jpg", "이시시.jpg", "도우.jpg", "렌.jpg", "릴로.jpg",
-        "배예솔.jpg", "미미유.jpg", "앨리스.jpg", "연하리.jpg", "우혜승.jpg", "장예은.jpg",
-        "임금손.jpg", "쪼야.jpg", "박현순.jpg", "송별이.jpg", "쏘드.jpg", "하슈.jpg",
-        "해란.jpg", "휴더휴먼.jpg", "체리크라프트.jpg", "클립트.jpg", "팻두.jpg", "하소녹.jpg"
-    ];
-
-    // 스크립트가 이미지 목록을 순회하며 슬라이드를 자동으로 생성
-    images.forEach(img => {
-        wrapper.innerHTML += `
-            <div class="swiper-slide">
-                <img src="./${img}" class="poster-img" alt="${img.replace('.jpg', '')} 작가 소개">
-            </div>`;
-    });
+    // 1.jpg부터 24.jpg까지 슬라이드 생성
+    for (let i = 1; i <= 24; i++) {
+        const slide = document.createElement('div');
+        slide.className = 'swiper-slide';
+        slide.innerHTML = `
+            <div class="bg-blur" style="background-image: url('./${i}.css' ? './${i}.jpg' : './${i}.jpg')"></div>
+            <img src="./${i}.jpg" class="poster-img" alt="작가소개 ${i}">
+        `;
+        wrapper.appendChild(slide);
+    }
 
     const swiper = new Swiper('.swiper', {
-        loop: true, // 마지막 작가에서 멈추지 않고 처음으로 순환
-        speed: 500, // 넘어가는 속도
-        resistance: true, // 스와이프 저항 효과
+        loop: true,
+        speed: 600,
+        grabCursor: true,
+        // 동그라미(pagination)는 제거되었습니다.
     });
 </script>
 </body>
