@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>24인의 아티스트 전시회</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; background: #f8f8f8; font-family: 'Pretendard', sans-serif; }
+        .swiper { width: 100%; height: 100vh; }
+        .swiper-slide { display: flex; flex-direction: column; justify-content: center; align-items: center; background: #fff; }
+        .poster-img { max-width: 90%; max-height: 85vh; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); object-fit: contain; }
+        .swiper-pagination-bullet-active { background: #333 !important; }
+    </style>
+</head>
+<body>
+
+<div class="swiper">
+    <div class="swiper-wrapper" id="slide-wrapper">
+        </div>
+    <div class="swiper-pagination"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    // 24명의 작가님 파일명 목록 (실제 올리신 파일명으로 수정하세요!)
+    const images = [
+        "구아.jpg", "정수진.jpg", "이시시.jpg", "도우.jpg", "렌.jpg", "릴로.jpg",
+        "배예솔.jpg", "미미유.jpg", "앨리스.jpg", "연하리.jpg", "우혜승.jpg", "장예은.jpg",
+        "임금손.jpg", "쪼야.jpg", "박현순.jpg", "송별이.jpg", "쏘드.jpg", "하슈.jpg",
+        "해란.jpg", "휴더휴먼.jpg", "체리.jpg", "클립트.jpg", "팻두.jpg", "하소녹.jpg"
+    ];
+
+    const wrapper = document.getElementById('slide-wrapper');
+    images.forEach(img => {
+        const slide = `<div class="swiper-slide"><img src="./${img}" class="poster-img"></div>`;
+        wrapper.innerHTML += slide;
+    });
+
+    const swiper = new Swiper('.swiper', {
+        loop: true,
+        pagination: { el: '.swiper-pagination', clickable: true },
+        touchRatio: 1.5, // 모바일에서 더 잘 넘어가게 설정
+    });
+</script>
+</body>
+</html>
