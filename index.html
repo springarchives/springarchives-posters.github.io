@@ -23,11 +23,37 @@
             height: 100%;
         }
 
-        /* 상단 중앙 텍스트 */
-        .info-top {
-            padding: 20px 20px 14px;
+        /* 슬라이더 */
+        .swiper {
+            flex: 1;
+            min-height: 0;
+            width: 100%;
+            position: relative;
+        }
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #fff;
+            position: relative;
+        }
+        .poster-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* 이미지 상단을 덮는 흰색 오버레이 + 행사 텍스트 */
+        .img-top-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            padding: 16px 20px 14px;
             text-align: center;
-            flex-shrink: 0;
+            z-index: 5;
         }
         .event-title {
             font-size: 0.82rem;
@@ -40,25 +66,6 @@
             font-size: 0.72rem;
             font-weight: 400;
             color: #999;
-        }
-
-        /* 슬라이더 */
-        .swiper {
-            flex: 1;
-            min-height: 0;
-            width: 100%;
-        }
-        .swiper-slide {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #fff;
-        }
-        .poster-img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: block;
         }
 
         /* 페이지네이션 */
@@ -99,19 +106,23 @@
 
 <div class="page">
 
-    <div class="info-top">
-        <div class="event-title">2026 봄 핸드메이드 마르쉐 in 도시제조허브</div>
-        <div class="event-date">2026. 5. 4 – 5. 28</div>
-    </div>
-
     <div class="swiper">
         <div class="swiper-wrapper" id="slide-wrapper"></div>
+
+        <!-- 이미지 상단 덮개 -->
+        <div class="img-top-overlay">
+            <div class="event-title">2026 봄 핸드메이드 마르쉐 in 도시제조허브</div>
+            <div class="event-date">2026. 5. 4 – 5. 28</div>
+        </div>
     </div>
 
     <div class="swiper-pagination"></div>
 
     <div class="info-bottom">
-        <div class="desc">다양한 분야의 작가 24인이 저마다의 시선으로 담아낸 계절의 순간들.</div>
+        <div class="desc">
+            다양한 분야의 작가 24인이<br>
+            저마다의 시선으로 담아낸 계절의 순간들.
+        </div>
     </div>
 
 </div>
