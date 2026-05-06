@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>ARTIST GALLERY</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -18,24 +18,43 @@
         }
 
         .page {
+            height: 100%;
             display: flex;
             flex-direction: column;
-            height: 100%;
         }
 
-        /* 슬라이더 */
+        /* ── 상단 텍스트 영역 ── */
+        .info-top {
+            flex-shrink: 0;
+            padding: 24px 24px 16px;
+            text-align: center;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .event-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #3a8c1c;
+            margin-bottom: 5px;
+            line-height: 1.5;
+        }
+        .event-date {
+            font-size: 0.73rem;
+            font-weight: 300;
+            color: #aaa;
+            letter-spacing: 0.04em;
+        }
+
+        /* ── 슬라이더 ── */
         .swiper {
             flex: 1;
             min-height: 0;
             width: 100%;
-            position: relative;
         }
         .swiper-slide {
             display: flex;
             justify-content: center;
             align-items: center;
             background: #fff;
-            position: relative;
         }
         .poster-img {
             width: 100%;
@@ -44,40 +63,17 @@
             display: block;
         }
 
-        /* 이미지 상단을 덮는 흰색 오버레이 + 행사 텍스트 */
-        .img-top-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: #fff;
-            padding: 16px 20px 14px;
-            text-align: center;
-            z-index: 5;
-        }
-        .event-title {
-            font-size: 0.82rem;
-            font-weight: 700;
-            color: #3a8c1c;
-            letter-spacing: 0.01em;
-            margin-bottom: 4px;
-        }
-        .event-date {
-            font-size: 0.72rem;
-            font-weight: 400;
-            color: #999;
-        }
-
-        /* 페이지네이션 */
+        /* ── 페이지네이션 ── */
         .swiper-pagination {
             position: relative !important;
             bottom: auto !important;
-            padding: 10px 0 0;
             flex-shrink: 0;
+            padding: 12px 0;
+            border-top: 1px solid #f0f0f0;
         }
         .swiper-pagination-bullet {
             background: #3a8c1c;
-            opacity: 0.25;
+            opacity: 0.2;
             width: 6px;
             height: 6px;
         }
@@ -88,16 +84,16 @@
             border-radius: 3px;
         }
 
-        /* 하단 설명 */
+        /* ── 하단 텍스트 영역 ── */
         .info-bottom {
-            padding: 10px 20px 28px;
-            text-align: center;
             flex-shrink: 0;
+            padding: 14px 24px 28px;
+            text-align: center;
         }
         .desc {
-            font-size: 0.72rem;
+            font-size: 0.73rem;
             font-weight: 300;
-            color: #aaa;
+            color: #bbb;
             line-height: 1.9;
         }
     </style>
@@ -106,14 +102,13 @@
 
 <div class="page">
 
+    <div class="info-top">
+        <div class="event-title">2026 봄 핸드메이드 마르쉐 in 도시제조허브</div>
+        <div class="event-date">2026. 5. 4 – 5. 28</div>
+    </div>
+
     <div class="swiper">
         <div class="swiper-wrapper" id="slide-wrapper"></div>
-
-        <!-- 이미지 상단 덮개 -->
-        <div class="img-top-overlay">
-            <div class="event-title">2026 봄 핸드메이드 마르쉐 in 도시제조허브</div>
-            <div class="event-date">2026. 5. 4 – 5. 28</div>
-        </div>
     </div>
 
     <div class="swiper-pagination"></div>
