@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>ARTIST GALLERY</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -12,115 +12,113 @@
 
         body, html {
             height: 100%;
-            background: #111;
-            overflow: hidden;
+            background: #fff;
             font-family: 'Noto Sans KR', sans-serif;
+            overflow: hidden;
         }
 
-        /* 슬라이더 — 상하 여백 줘서 텍스트 공간 확보 */
+        .page {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        /* 상단 중앙 텍스트 */
+        .info-top {
+            padding: 20px 20px 14px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .event-title {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #3a8c1c;
+            letter-spacing: 0.01em;
+            margin-bottom: 4px;
+        }
+        .event-date {
+            font-size: 0.72rem;
+            font-weight: 400;
+            color: #999;
+        }
+
+        /* 슬라이더 */
         .swiper {
+            flex: 1;
+            min-height: 0;
             width: 100%;
-            height: calc(100% - 120px);
-            margin-top: 0;
         }
-
         .swiper-slide {
             display: flex;
             justify-content: center;
             align-items: center;
+            background: #fff;
         }
-
         .poster-img {
-            max-width: 100%;
-            max-height: 100%;
+            width: 100%;
+            height: 100%;
             object-fit: contain;
             display: block;
         }
 
-        /* 상단 행사 정보 */
-        .info-top {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 10;
-            padding: 18px 24px 14px;
-            background: linear-gradient(180deg, #111 60%, transparent 100%);
-        }
-
-        .info-top .event-title {
-            font-size: 0.78rem;
-            font-weight: 700;
-            color: #8fcc4a;
-            letter-spacing: 0.06em;
-            margin-bottom: 4px;
-        }
-
-        .info-top .event-date {
-            font-size: 0.72rem;
-            font-weight: 400;
-            color: rgba(255,255,255,0.5);
-            letter-spacing: 0.04em;
-        }
-
-        /* 하단 설명 텍스트 */
-        .info-bottom {
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            z-index: 10;
-            padding: 16px 24px 20px;
-            background: linear-gradient(0deg, #111 60%, transparent 100%);
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            gap: 16px;
-        }
-
-        .info-bottom .desc {
-            font-size: 0.75rem;
-            font-weight: 300;
-            color: rgba(255,255,255,0.55);
-            line-height: 1.7;
-            letter-spacing: 0.02em;
-        }
-
         /* 페이지네이션 */
         .swiper-pagination {
-            bottom: 72px !important;
+            position: relative !important;
+            bottom: auto !important;
+            padding: 10px 0 0;
+            flex-shrink: 0;
         }
         .swiper-pagination-bullet {
-            background: #8fcc4a;
-            opacity: 0.3;
+            background: #3a8c1c;
+            opacity: 0.25;
+            width: 6px;
+            height: 6px;
         }
         .swiper-pagination-bullet-active {
-            background: #8fcc4a;
+            background: #3a8c1c;
             opacity: 1;
+            width: 20px;
+            border-radius: 3px;
+        }
+
+        /* 하단 설명 */
+        .info-bottom {
+            padding: 10px 20px 28px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .desc {
+            font-size: 0.72rem;
+            font-weight: 300;
+            color: #aaa;
+            line-height: 1.9;
         }
     </style>
 </head>
 <body>
 
-<!-- 상단 행사 정보 -->
-<div class="info-top">
-    <div class="event-title">2026 봄 핸드메이드 마르쉐 in 도시제조허브</div>
-    <div class="event-date">2026. 5. 4 – 5. 28</div>
-</div>
+<div class="page">
 
-<!-- 슬라이더 -->
-<div class="swiper">
-    <div class="swiper-wrapper" id="slide-wrapper"></div>
-    <div class="swiper-pagination"></div>
-</div>
-
-<!-- 하단 설명 -->
-<div class="info-bottom">
-    <div class="desc">
-        다양한 분야의 작가 24인이 저마다의 시선으로 담아낸<br>계절의 순간들.
+    <div class="info-top">
+        <div class="event-title">2026 봄 핸드메이드 마르쉐 in 도시제조허브</div>
+        <div class="event-date">2026. 5. 4 – 5. 28</div>
     </div>
+
+    <div class="swiper">
+        <div class="swiper-wrapper" id="slide-wrapper"></div>
+    </div>
+
+    <div class="swiper-pagination"></div>
+
+    <div class="info-bottom">
+        <div class="desc">다양한 분야의 작가 24인이 저마다의 시선으로 담아낸 계절의 순간들.</div>
+    </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
     const wrapper = document.getElementById('slide-wrapper');
-
     for (let i = 1; i <= 24; i++) {
         wrapper.innerHTML += `
             <div class="swiper-slide">
@@ -130,7 +128,7 @@
 
     new Swiper('.swiper', {
         loop: false,
-        pagination: { el: '.swiper-pagination' },
+        pagination: { el: '.swiper-pagination', clickable: true },
         resistance: true,
         resistanceRatio: 0,
     });
